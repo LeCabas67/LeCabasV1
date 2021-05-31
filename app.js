@@ -25,13 +25,6 @@ const opts = {
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
 };
 app.options('*', cors(opts));
-
-app.use(cors());
-const opts = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-};
-app.options('*', cors(opts));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

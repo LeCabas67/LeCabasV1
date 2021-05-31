@@ -1,29 +1,10 @@
-const ConnectionType = require('./ConnectionTypes');
-
-const UnRequiredString = {
-    required: false,
-    type: String
+const createModelOptions = (type, required = false, unique = false, ref = undefined) => {
+    let obj =  {type: type, required: required, unique: unique};
+    if (ref)
+        obj['ref'] = ref;
+    return obj;
 }
 
-const RequiredString = {
-    required: true,
-    type: String
-}
+const ObjectId = require('mongoose').Types.ObjectId;
 
-const RequiredUniqueString = {
-    required: true,
-    type: String,
-    unique: true
-}
-
-const RequireConnectionType = {
-    required: true,
-    type: ConnectionType
-}
-
-const RequiredBoolean = {
-    required: true,
-    type: Boolean
-}
-
-module.exports = { UnRequiredString, RequiredString, RequiredUniqueString, RequireConnectionType, RequiredBoolean}
+module.exports = { createModelOptions, ObjectId};

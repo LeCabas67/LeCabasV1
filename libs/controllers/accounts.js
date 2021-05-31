@@ -7,8 +7,8 @@ const {Error} = require('@datas/ResponseTypes');
 const signin = (req, res, next) => {
     let callback = passport.authenticate('signin', {session: false }, (err, user, info) => {
         if (err)
-            return res.status(err.code).json(err.error);
-        return res.status(!user ? 400 : 201).json(info)
+            return res.status(err.code).json(new Error(err.error));
+        return res.status(!user ? 400 : 201).json(!user ? new Error(info.message): info);
     });
     return callback(req, res, next);
 };
@@ -17,7 +17,7 @@ const signup = (req, res, next) => {
     let callback = passport.authenticate('signup', {session: false }, (err, user, info) => {
         if (err)
             return res.status(err.code).json(new Error(err.error));
-        return res.status(!user ? 400 : 201).json(!user ? new Error("You already have an account with this email" ): info)
+        return res.status(!user ? 400 : 201).json(!user ? new Error(info.message): info)
     });
     return callback(req, res, next);
 };
