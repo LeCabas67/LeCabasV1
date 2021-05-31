@@ -1,12 +1,30 @@
-var createError = require('http-errors');
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
+let options = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true};
 
-var app = express();
+mongoose.connect(process.env.MONGO_URI, options);
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+
+const indexRouter = require('./routes/index');
+const path = require("path");
+
+
+const app = express();
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(cors());
+const opts = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+};
+app.options('*', cors(opts));
 
 app.use(cors());
 const opts = {
