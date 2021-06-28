@@ -1,4 +1,4 @@
-FROM buildkite/puppeteer
+FROM node
 
 RUN mkdir -p /api
 
